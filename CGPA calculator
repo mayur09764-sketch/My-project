@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+
+float getGradePoints(char grade) {
+    switch (grade) {
+        case 'A': return 4.0;
+        case 'B': return 3.0;
+        case 'C': return 2.0;
+        case 'D': return 1.0;
+        case 'F': return 0.0;
+        default: return 0.0;
+    }
+}
+
+int main() {
+    const int MAX_SUBJECTS = 10;  // Maximum number of subjects
+    int numSubjects;
+    int creditHours[MAX_SUBJECTS];
+    char grades[MAX_SUBJECTS];
+    
+    cout << "Enter the number of subjects: ";
+    cin >> numSubjects;
+
+    if (numSubjects > MAX_SUBJECTS) {
+        cout << "Maximum number of subjects exceeded." << endl;
+        return 1;
+    }
+
+    float totalGradePoints = 0;
+    int totalCreditHours = 0;
+
+    for (int i = 0; i < numSubjects; ++i) {
+        cout << "Enter the credit hours for subject " << i + 1 << ": ";
+        cin >> creditHours[i];
+        cout << "Enter the grade for subject " << i + 1 << " (A, B, C, D, F): ";
+        cin >> grades[i];
+
+        // Calculate grade points for this subject
+        float gradePoints = getGradePoints(grades[i]);
+        totalGradePoints += gradePoints * creditHours[i];
+        totalCreditHours += creditHours[i];
+    }
+
+    if (totalCreditHours == 0) {
+        cout << "No credit hours provided. Cannot calculate CGPA." << endl;
+    } else {
+        float cgpa = totalGradePoints / totalCreditHours;
+        cout << "Your CGPA is: " << cgpa << endl;
+    }
+
+    return 0;
+}
