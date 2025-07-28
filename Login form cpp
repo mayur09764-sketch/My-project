@@ -1,0 +1,94 @@
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+const int MAX_USERS = 100;  // Maximum number of users
+
+struct User {
+    string username;
+    string password;
+};
+
+User users[MAX_USERS];
+int userCount = 0;
+
+void registerUser() {
+    if (userCount >= MAX_USERS) {
+        cout << "User limit reached. Cannot register more users." << endl;
+        return;
+    }
+    
+    string username, password;
+    cout << "Register New User" << endl;
+    cout << "Enter Username: ";
+    cin >> username;
+    cout << "Enter Password: ";
+    cin >> password;
+
+ 
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].username == username) {
+            cout << "Username already exists. Please choose a different username." << endl;
+            return;
+        }
+    }
+
+    // Register new user
+    users[userCount].username = username;
+    users[userCount].password = password;
+    userCount++;
+    cout << "Registration Successful!" << endl;
+}
+
+bool loginUser() {
+    string username, password;
+    cout << "Login" << endl;
+    cout << "Enter Username: ";
+    cin >> username;
+    cout << "Enter Password: ";
+    cin >> password;
+
+  
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].username == username && users[i].password == password) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void displayMenu() {
+    int choice;
+    cout << "1. Register" << endl;
+    cout << "2. Login" << endl;
+    cout << "3. Exit" << endl;
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            registerUser();
+            break;
+        case 2:
+            if (loginUser()) {
+                cout << "Login Successful!" << endl;
+            } else {
+                cout << "Invalid Username or Password!" << endl;
+            }
+            break;
+        case 3:
+            cout << "Exiting..." << endl;
+            exit(0);
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+    }
+}
+
+int main() {
+    while (true) {
+        displayMenu();
+    }
+    return 0;
+}
